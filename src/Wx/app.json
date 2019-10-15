@@ -1,0 +1,31 @@
+{
+  "pages": [
+    "pages/launch/launch",
+    "pages/charts/charts",
+    "pages/note/index/index",
+    "pages/note/noteAdd/noteAdd",
+    "pages/logs/logs",
+    "pages/user/user"
+
+  ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/note/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "开心睿宝",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
+  },
+  "sitemapLocation": "sitemap.json"
+}

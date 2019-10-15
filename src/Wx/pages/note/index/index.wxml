@@ -1,0 +1,74 @@
+<scroll-view class='page'>
+    <cover-view class="cover-add" bindtap="addRecord"  style="margin-top:200rpx">
+      <cover-image src="/images/camera.png" />
+    </cover-view>
+  <!-- 列表 -->
+  <view class='CircleList' wx:for='{{list}}' wx:key="_id">
+    <!-- 头像、昵称、内容 -->
+    <view class='body-view'>
+      <!-- 头像 -->
+      <view class='left-view'>
+        <image class='user-icon' src='{{fileServer}}{{item.avatarUrl}}'></image>
+      </view>
+      <view class='right-view'>
+        <!-- 昵称 -->
+        <view class='user-name-view'>
+          <label class='user-name'>{{item.userName}}</label>
+        </view>
+        <!-- 内容 -->
+        <view class='user-content-view'>
+          <text class='user-content' selectable='true'>{{item.content}}</text>
+        </view>
+        <!-- 图片 -->
+        <view class='photo-view'>
+          <view class='photo' wx:for='{{item.imageList}}' wx:for-item="fileItem" wx:for-index="imageIndex" wx:key="" style='width:{{photoWidth}}px;height:{{photoWidth}}px'>
+            <image bindtap='LookPhoto' data-recordIndex = "{{index}}" data-index="{{imageIndex}}" src='{{fileItem}}' style='width:{{photoWidth}}px;height:{{photoWidth}}px' lazy-load="true"  binderror='loadImageError'></image>
+          </view>
+        </view>
+        <!-- 地理位置 -->
+        <view class='user-address-view'>
+          <label>{{item.location.name}}</label>
+        </view>
+
+        <!-- 时间、删除按钮、点赞评论按钮 -->
+        <view class='TDD-view'>
+          <label>{{item.createTimeStr}}</label>
+          <button wx:if="{{item.canDelete}}" bindtap='delete' data-index="{{index}}">删除</button>
+          <!--
+          <button wx:if="{{item.canPraise}}" bindtap='praise' data-index="{{index}}">点赞</button>
+          <button  bindtap='showInput' data-index="{{index}}">评论</button>-->
+        </view>
+
+        <!-- 点赞 -->
+        <view class='praise-view'>
+          <!-- 点赞 -->
+          <view class='praise-bg-view' wx:if="{{item.praiseStr.length > 0}}">
+            <view class='praise-user-view'>
+              <label  class='praise-user'>{{item.praiseStr}}</label>
+            </view>
+          </view>
+          <view class='line'></view>
+          <!-- 评论 -->
+          <view class='discuss-view'>
+            <view class='discuss' wx:for='{{item.discussList}}' wx:for-item="discussItem" wx:key="_id">
+              <label class='discuss-user'>{{discussItem.userName}}：</label>
+              <label class='content'>{{discussItem.content}}</label>
+            </view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</scroll-view>
+
+
+<!-- 输入框及发送按钮 -->
+<view class="input-section" wx:if="{{showInput}}" >
+  <input class='input_input' value="{{inputMessage}}" focus="auto" placeholder="请输入内容" bindinput='bindInputMsg' confirm-type="send" bindconfirm="sendDiscuss" bindblur="onHideInput" />
+  <view style="height:110rpx;width:170rpx;display:flex; align-items: center;justify-content: center;">
+    <view class="send_btn">
+      <text class="send_btn_text" bindtap="sendDiscuss">发送</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,50 @@
+/**index.wxss**/
+
+.userinfo {
+  margin-top: 150rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  flex-direction: column;
+}
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  overflow:hidden;
+margin-bottom: 50rpx;
+}
+.userinfo-nickname {
+  color: #aaa;
+  width: 100%;
+}
+.loginInfo-btn {
+  margin-top: 20rpx;
+}
+
+.userinfo-usercode {
+  margin-top: 50rpx;
+  display: flex;
+  flex-direction: column;
+}
+.userinfo-text {
+font-size: 16px;
+margin-top: 15rpx;
+}
+.weather-text {
+font-size: 11px;
+margin-top: 8rpx;
+}
+
+.systemInfo-text {
+font-size: 11px;
+color: rgb(59, 15, 59);
+}
+.systemManagerBtn{
+    position: absolute;
+    bottom: 150rpx;
+}
+.systemInfo{
+    position: absolute;
+    bottom: 20rpx;
+}

@@ -1,0 +1,29 @@
+/**index.wxss**/
+.launchImage {
+  margin: 0px;
+  width: 160px;
+  height: 160px;
+  align-items: center;
+  border-radius: 90%;
+}
+.loginInfo {
+  margin-top: 200rpx;
+}
+.userinfo {
+  display: flex;
+}
+.userinfo-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  overflow:hidden;
+
+}
+.userinfo-nickname {
+  color: #aaa;
+  width: 100rpx;
+}
+.loginInfo-btn {
+  margin-top: 20rpx;
+}
+
