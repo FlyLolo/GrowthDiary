@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GrowthDiary.Common;
 using GrowthDiary.Wx;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,16 +10,16 @@ namespace GrowthDiary.Controllers
     [Route("api/[controller]")]
     public class WxController : Controller
     {
-        private readonly IConfiguration _configuration;
-        public WxController(IConfiguration configuration)
+        private readonly IOptionsMonitor<WXOptions> _options;
+        public WxController(IOptionsMonitor<WXOptions> options)
         {
-            _configuration = configuration;
+            _options = options;
         }
         // GET: api/<controller>
         [HttpGet]
         public ActionResult Get(SignatureModel signatureModel)
         {
-            signatureModel.Token = _configuration["WX:Token"];
+            signatureModel.Token = _options.Get("WXOptions").Token;
             string rtnStr;
             if (SignatureHelper.Check(signatureModel))
             {
