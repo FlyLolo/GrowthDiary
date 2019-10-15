@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrowthDiary.IRepository\GrowthDiary.IRepository.csproj" />
     <ProjectReference Include="..\GrowthDiary.Model\GrowthDiary.Model.csproj" />
-    <ProjectReference Include="..\IRepository\GrowthDiary.IRepository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrowthDiary.IRepository\GrowthDiary.IRepository.csproj" />
     <ProjectReference Include="..\GrowthDiary.Model\GrowthDiary.Model.csproj" />
     <ProjectReference Include="..\GrowthDiary.ViewModel\GrowthDiary.ViewModel.csproj" />
   </ItemGroup>

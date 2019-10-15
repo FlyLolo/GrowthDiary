@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrowthDiary.IService\GrowthDiary.IService.csproj" />
     <ProjectReference Include="..\GrowthDiary.ViewModel\GrowthDiary.ViewModel.csproj" />
-    <ProjectReference Include="..\IService\GrowthDiary.IService.csproj" />
   </ItemGroup>
 </Project>
