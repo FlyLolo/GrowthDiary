@@ -13,4 +13,9 @@ namespace GrowthDiary.ViewModel
         public DateTime CreateTime { get; set; }
 
     }
+
+    public class RecordSearchViewModel : BaseSearchViewModel
+    {
+
+    }
 }

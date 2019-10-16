@@ -7,4 +7,13 @@
   <ItemGroup>
     <Compile Remove="Class1.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GrowthDiary.IRepository\GrowthDiary.IRepository.csproj" />
+    <ProjectReference Include="..\GrowthDiary.IService\GrowthDiary.IService.csproj" />
+  </ItemGroup>
 </Project>

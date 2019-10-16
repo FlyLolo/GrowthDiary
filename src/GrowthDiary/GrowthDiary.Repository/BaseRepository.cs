@@ -20,9 +20,9 @@ namespace GrowthDiary.Repository
             return MongoHelper.FindList<T>();
         }
 
-        public int Add(T info)
+        public void Add(T info)
         {
-            return MongoHelper.InsertOne(info);
+            MongoHelper.InsertOne(info);
         }
 
         public int Update(T info, params string[] fields)

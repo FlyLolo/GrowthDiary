@@ -8,7 +8,7 @@ namespace GrowthDiary.IRepository
     {
         T GetById(string id) ;
         List<T> GetList();
-        int Add(T info);
+        void Add(T info);
         int Update(T info, params string[] fields);
         Task<int> UpdateAsync(T info, params string[] fields);
         Task<int> ReplaceOneAsync(T info);

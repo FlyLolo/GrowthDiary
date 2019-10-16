@@ -17,34 +17,46 @@ namespace GrowthDiary.Repository
             database = mongoClient.GetDatabase(configuration.GetSection("DB:Name").Value);
         }
 
-        public static T Find<T>(FilterDefinition<T> filter, string collectionName = null)
+        public static T Find<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
-            collectionName ??= typeof(T).Name;
-            var collection = database.GetCollection<T>(collectionName);
-            return collection.Find(filter).FirstOrDefault();
+            return FindList<T>(filter,collectionName).FirstOrDefault();
         }
-
-        public static List<T> FindList<T>(FilterDefinition<T> filter, string collectionName = null)
+        public static List<T> FindList<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
+            filter ??= new BsonDocument();
             var collection = database.GetCollection<T>(collectionName);
             return collection.Find(filter).ToList();
         }
 
-        public static List<T> FindList<T>(string collectionName = null)
+        public static async Task<T> FindAsync<T>(FilterDefinition<T> filter = null, string collectionName = null)
+        {
+            var result = await FindListAsync<T>(filter,collectionName);
+            return result.FirstOrDefault();
+        }
+
+        public static async Task<List<T>> FindListAsync<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
+            filter ??= new BsonDocument();
             var collection = database.GetCollection<T>(collectionName);
-            return collection.Find(new BsonDocument()).ToList();
+            var result = await collection.FindAsync(filter);
+            return result.ToList();
         }
 
 
-        public static int InsertOne<T>(T model, string collectionName = null)
+        public static void InsertOne<T>(T model, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);
             collection.InsertOne(model);
-            return 0;
+        }
+
+        public static async Task InsertOneAsync<T>(T model, string collectionName = null)
+        {
+            collectionName ??= typeof(T).Name;
+            var collection = database.GetCollection<T>(collectionName);
+            await collection.InsertOneAsync(model);
         }
 
         public static int UpdateOne<T>(T model, string collectionName = null, params string[] fields) where T : BaseModel
@@ -84,23 +96,6 @@ namespace GrowthDiary.Repository
             }
         }
 
-        public static int ReplaceOne<T>(T model, string collectionName = null) where T : BaseModel
-        {
-            collectionName ??= typeof(T).Name;
-            var collection = database.GetCollection<T>(collectionName);
-            var result = collection.ReplaceOne(m => m._id == model._id, model);
-
-            if (result.ModifiedCount == 1)
-            {
-                return 0;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-
         public static async Task<int> UpdateOneAsync<T>(T model, string collectionName = null, params string[] fields) where T : BaseModel
         {
             collectionName ??= typeof(T).Name;
@@ -120,6 +115,22 @@ namespace GrowthDiary.Repository
 
             var updatefilter = Builders<T>.Update.Combine(list);
             var result = await collection.UpdateOneAsync(m => m._id == model._id, updatefilter);
+
+            if (result.ModifiedCount == 1)
+            {
+                return 0;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public static int ReplaceOne<T>(T model, string collectionName = null) where T : BaseModel
+        {
+            collectionName ??= typeof(T).Name;
+            var collection = database.GetCollection<T>(collectionName);
+            var result = collection.ReplaceOne(m => m._id == model._id, model);
 
             if (result.ModifiedCount == 1)
             {

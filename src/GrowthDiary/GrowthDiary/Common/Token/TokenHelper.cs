@@ -16,7 +16,7 @@ namespace FlyLolo.JWT
     }
     public class TokenHelper : ITokenHelper
     {
-        private IOptions<JWTConfig> _options;
+        private readonly IOptions<JWTConfig> _options;
         public TokenHelper(IOptions<JWTConfig> options)
         {
             _options = options;

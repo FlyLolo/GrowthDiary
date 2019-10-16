@@ -2,9 +2,8 @@
 
 namespace GrowthDiary.IService
 {
-    public interface IUserService : IBaseService
+    public interface IUserService : IBaseService<UserViewModel>
     {
-        int Add(UserViewModel user);
-        UserViewModel Get(UserSearchViewModel SearchModel);
+        UserViewModel Find(UserSearchViewModel SearchModel);
     }
 }

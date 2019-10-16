@@ -1,6 +1,6 @@
 ﻿namespace GrowthDiary.ViewModel
 {
-    public class UserViewModel
+    public class UserViewModel:BaseViewModel
     {
         public string UserCode { get; set; }
         public string UserName { get; set; }

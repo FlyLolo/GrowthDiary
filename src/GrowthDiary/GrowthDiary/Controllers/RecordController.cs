@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GrowthDiary.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,6 +21,11 @@ namespace GrowthDiary.Controllers
         public string Get(string id)
         {
             return "value";
+        }
+
+        public JsonResult Post([FromBody] RecordViewModel record)
+        {
+            return new JsonResult();
         }
     }
 }

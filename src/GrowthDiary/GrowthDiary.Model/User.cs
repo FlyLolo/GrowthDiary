@@ -17,7 +17,7 @@
         public int State { get; set; }
     }
 
-    public class UserSearchInfo : BaseSearchModel
+    public class UserSearchModel : BaseSearchModel
     {
         public string UserCode { get; set; }
         public string WxOpenId { get; set; }

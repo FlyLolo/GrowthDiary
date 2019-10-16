@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrowthDiary.IRepository", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrowthDiary.IService", "GrowthDiary.IService\GrowthDiary.IService.csproj", "{FA16867F-85FC-494F-85E1-DB811D5E0320}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrowthDiary.Test", "GrowthDiary.Test\GrowthDiary.Test.csproj", "{F1DD7F81-3C40-4D69-8959-EDAA28E0ECCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{FA16867F-85FC-494F-85E1-DB811D5E0320}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA16867F-85FC-494F-85E1-DB811D5E0320}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA16867F-85FC-494F-85E1-DB811D5E0320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DD7F81-3C40-4D69-8959-EDAA28E0ECCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DD7F81-3C40-4D69-8959-EDAA28E0ECCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DD7F81-3C40-4D69-8959-EDAA28E0ECCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DD7F81-3C40-4D69-8959-EDAA28E0ECCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

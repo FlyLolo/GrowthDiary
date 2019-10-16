@@ -1,5 +1,8 @@
+using AutoMapper;
 using FlyLolo.JWT;
 using GrowthDiary.Common;
+using GrowthDiary.IService;
+using GrowthDiary.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +59,11 @@ namespace GrowthDiary
                  };
              });
             #endregion
+
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+
+            services.AddSingleton<IUserService,UserService>();
+            services.AddSingleton<IRecordService,RecordService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

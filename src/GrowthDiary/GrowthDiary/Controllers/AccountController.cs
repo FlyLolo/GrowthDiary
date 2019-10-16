@@ -30,7 +30,7 @@ namespace GrowthDiary.Controllers
         [AllowAnonymous]
         public JsonResult Get([FromServices] IHttpClientFactory httpClientFactory)
         {
-            string loginCode = string.Empty;
+            string loginCode;
             if (Request.Query.Keys.Contains("loginCode"))
             {
                 loginCode = Request.Query["loginCode"];
@@ -50,13 +50,11 @@ namespace GrowthDiary.Controllers
 
             using (var client = httpClientFactory.CreateClient())
             {
-                using (var res = client.GetAsync(url))
+                using var res = client.GetAsync(url);
+                if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    if (res.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        var str = res.Result.Content.ReadAsStringAsync().Result;
-                        session = JsonConvert.DeserializeObject<Code2Session>(str);
-                    }
+                    var str = res.Result.Content.ReadAsStringAsync().Result;
+                    session = JsonConvert.DeserializeObject<Code2Session>(str);
                 }
             }
 
@@ -65,7 +63,7 @@ namespace GrowthDiary.Controllers
                 return new JsonResult(new ApiResult(ReturnCode.GeneralError));
             }
 
-            UserViewModel user = _userService.Get(new UserSearchViewModel() { WxOpenId = session.Openid });
+            UserViewModel user = _userService.Find(new UserSearchViewModel() { WxOpenId = session.Openid });
 
             if (null == user)
             {

@@ -5,12 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GrowthDiary.IRepository\GrowthDiary.IRepository.csproj" />
     <ProjectReference Include="..\GrowthDiary.IService\GrowthDiary.IService.csproj" />
+    <ProjectReference Include="..\GrowthDiary.Repository\GrowthDiary.Repository.csproj" />
+    <ProjectReference Include="..\GrowthDiary.Service\GrowthDiary.Service.csproj" />
     <ProjectReference Include="..\GrowthDiary.ViewModel\GrowthDiary.ViewModel.csproj" />
   </ItemGroup>
 </Project>
