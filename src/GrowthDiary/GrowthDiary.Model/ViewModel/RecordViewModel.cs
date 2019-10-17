@@ -1,18 +1,13 @@
 ﻿using System;
 
-namespace GrowthDiary.ViewModel
+namespace GrowthDiary.Model
 {
     public class RecordViewModel : BaseViewModel
     {
         public string UserCode { get; set; }
         public string UserName { get; set; }
 
-        public int ValueType { get; set; }
+        public RecordType RecordType { get; set; }
         public float Value { get; set; }
-    }
-
-    public class RecordSearchViewModel : BaseSearchViewModel
-    {
-
     }
 }

@@ -1,10 +1,11 @@
-﻿using GrowthDiary.ViewModel;
+﻿using GrowthDiary.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GrowthDiary.IService
 {
     public interface IRecordService: IBaseService<RecordViewModel>
     {
-        List<RecordViewModel> Find(RecordSearchViewModel SearchModel);
+        Task<List<RecordViewModel>> FindAsync(RecordSearchModel SearchModel);
     }
 }

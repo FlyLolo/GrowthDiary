@@ -1,6 +1,10 @@
-﻿using GrowthDiary.ViewModel;
+﻿using GrowthDiary.Common;
+using GrowthDiary.IService;
+using GrowthDiary.Model;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,23 +13,49 @@ namespace GrowthDiary.Controllers
     [Route("api/[controller]")]
     public class RecordController : BaseController
     {
-        // GET: api/<controller>
+        private readonly IRecordService _recordService;
+        public RecordController(IRecordService recordService)
+        {
+            _recordService = recordService;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ApiResult> Get(RecordSearchModel searchViewModel)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var list = await _recordService.FindAsync(searchViewModel);
+                return new ApiResult<List<RecordViewModel>>(list);
+            }
+            catch (Exception)
+            {
+                return new ApiResult(ReturnCode.GeneralError);
+            }
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(string id)
+        public async Task<ApiResult> Post([FromBody] RecordViewModel record)
         {
-            return "value";
-        }
+            if (record == null)
+            {
+                return new ApiResult(ReturnCode.ArgsError);
+            }
+            try
+            {
+                if (string.IsNullOrEmpty(record._id))
+                {
+                    await _recordService.InsertOneAsync(record);
+                }
+                else
+                {
+                    await _recordService.UpdateOneAsync(record);
+                }
 
-        public JsonResult Post([FromBody] RecordViewModel record)
-        {
-            return new JsonResult();
+                return new ApiResult(ReturnCode.GeneralError);
+            }
+            catch (Exception)
+            {
+                return new ApiResult(ReturnCode.GeneralError);
+            }            
         }
     }
 }

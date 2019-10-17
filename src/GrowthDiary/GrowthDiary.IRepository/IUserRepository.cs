@@ -4,6 +4,6 @@ namespace GrowthDiary.IRepository
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-        User Get(UserSearchModel user);
+        User Find(UserSearchModel user);
     }
 }

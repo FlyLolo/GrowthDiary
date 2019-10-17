@@ -1,4 +1,4 @@
-﻿using GrowthDiary.ViewModel;
+﻿using GrowthDiary.Model;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;

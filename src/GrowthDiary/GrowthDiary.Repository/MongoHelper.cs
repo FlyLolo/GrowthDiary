@@ -10,18 +10,22 @@ namespace GrowthDiary.Repository
 {
     public class MongoHelper
     {
-        private static IMongoDatabase database;
-        public MongoHelper(IConfiguration configuration)
+        private readonly IMongoDatabase database;
+        public MongoHelper(IConfiguration configuration) : this(configuration["DB:ConnectionString"], configuration.GetSection("DB:Name").Value)
         {
-            MongoClient mongoClient = new MongoClient(configuration["DB:ConnectionString"]);
-            database = mongoClient.GetDatabase(configuration.GetSection("DB:Name").Value);
+
+        }
+        public MongoHelper(string ConnectionString,string DBName)
+        {
+            MongoClient mongoClient = new MongoClient(ConnectionString);
+            database = mongoClient.GetDatabase(DBName);
         }
 
-        public static T Find<T>(FilterDefinition<T> filter = null, string collectionName = null)
+        public T Find<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
             return FindList<T>(filter,collectionName).FirstOrDefault();
         }
-        public static List<T> FindList<T>(FilterDefinition<T> filter = null, string collectionName = null)
+        public List<T> FindList<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
             filter ??= new BsonDocument();
@@ -29,13 +33,13 @@ namespace GrowthDiary.Repository
             return collection.Find(filter).ToList();
         }
 
-        public static async Task<T> FindAsync<T>(FilterDefinition<T> filter = null, string collectionName = null)
+        public async Task<T> FindAsync<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
             var result = await FindListAsync<T>(filter,collectionName);
             return result.FirstOrDefault();
         }
 
-        public static async Task<List<T>> FindListAsync<T>(FilterDefinition<T> filter = null, string collectionName = null)
+        public async Task<List<T>> FindListAsync<T>(FilterDefinition<T> filter = null, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
             filter ??= new BsonDocument();
@@ -45,21 +49,22 @@ namespace GrowthDiary.Repository
         }
 
 
-        public static void InsertOne<T>(T model, string collectionName = null)
+        public void InsertOne<T>(T model, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);
             collection.InsertOne(model);
+           // var a = model.
         }
 
-        public static async Task InsertOneAsync<T>(T model, string collectionName = null)
+        public async Task InsertOneAsync<T>(T model, string collectionName = null)
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);
             await collection.InsertOneAsync(model);
         }
 
-        public static int UpdateOne<T>(T model, string collectionName = null, params string[] fields) where T : BaseModel
+        public int UpdateOne<T>(T model, string collectionName = null, params string[] fields) where T : BaseModel
         {
             var list = new List<UpdateDefinition<T>>();
             bool updateAll = false;
@@ -79,7 +84,7 @@ namespace GrowthDiary.Repository
             return UpdateOne(model._id, updateDefinition, collectionName);
         }
 
-        public static int UpdateOne<T>(string id, UpdateDefinition<T> updateDefinition, string collectionName = null) where T : BaseModel
+        public int UpdateOne<T>(string id, UpdateDefinition<T> updateDefinition, string collectionName = null) where T : BaseModel
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);
@@ -96,7 +101,7 @@ namespace GrowthDiary.Repository
             }
         }
 
-        public static async Task<int> UpdateOneAsync<T>(T model, string collectionName = null, params string[] fields) where T : BaseModel
+        public async Task<int> UpdateOneAsync<T>(T model, string collectionName = null, params string[] fields) where T : BaseModel
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);
@@ -126,7 +131,7 @@ namespace GrowthDiary.Repository
             }
         }
 
-        public static int ReplaceOne<T>(T model, string collectionName = null) where T : BaseModel
+        public int ReplaceOne<T>(T model, string collectionName = null) where T : BaseModel
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);
@@ -142,7 +147,7 @@ namespace GrowthDiary.Repository
             }
         }
 
-        public static async Task<int> ReplaceOneAsync<T>(T model, string collectionName = null) where T : BaseModel
+        public async Task<int> ReplaceOneAsync<T>(T model, string collectionName = null) where T : BaseModel
         {
             collectionName ??= typeof(T).Name;
             var collection = database.GetCollection<T>(collectionName);

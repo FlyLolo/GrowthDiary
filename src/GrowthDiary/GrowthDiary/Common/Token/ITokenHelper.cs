@@ -1,4 +1,4 @@
-﻿using GrowthDiary.ViewModel;
+﻿using GrowthDiary.Model;
 using System.Security.Claims;
 
 namespace FlyLolo.JWT

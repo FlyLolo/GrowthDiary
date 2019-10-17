@@ -15,7 +15,7 @@ namespace GrowthDiary.Common
     {
         private static readonly Dictionary<ReturnCode, string> codeMessageDict = new Dictionary<ReturnCode, string>() { { ReturnCode.Success, "操作成功。" }, { ReturnCode.ArgsError, "参数错误。" }, { ReturnCode.GeneralError, "操作错误。" }, { ReturnCode.AuthorizeError, "授权错误。" } };
 
-        public ApiResult(ReturnCode returnCode, string msg = null)
+        public ApiResult(ReturnCode returnCode = ReturnCode.Success, string msg = null)
         {
             Code = returnCode;
             Message = msg ?? (codeMessageDict[returnCode] ?? "未知错误。");
@@ -27,7 +27,7 @@ namespace GrowthDiary.Common
 
     public class ApiResult<T> : ApiResult
     {
-        public ApiResult(ReturnCode returnCode, T data, string msg = null) : base(returnCode, msg)
+        public ApiResult(T data, ReturnCode returnCode = ReturnCode.Success, string msg = null) : base(returnCode, msg)
         {
             Data = data;
         }

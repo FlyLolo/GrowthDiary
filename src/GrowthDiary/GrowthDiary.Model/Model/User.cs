@@ -13,14 +13,8 @@
         public string City { get; set; }
         public string Language { get; set; }
         public string Telephone { get; set; }
+        public string Password { get; set; }
 
         public int State { get; set; }
-    }
-
-    public class UserSearchModel : BaseSearchModel
-    {
-        public string UserCode { get; set; }
-        public string WxOpenId { get; set; }
-
     }
 }

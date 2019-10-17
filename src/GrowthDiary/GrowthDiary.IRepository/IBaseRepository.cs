@@ -6,12 +6,18 @@ namespace GrowthDiary.IRepository
 {
     public interface IBaseRepository<T> where T : BaseModel
     {
-        T GetById(string id) ;
-        List<T> GetList();
-        void Add(T info);
-        int Update(T info, params string[] fields);
-        Task<int> UpdateAsync(T info, params string[] fields);
-        Task<int> ReplaceOneAsync(T info);
+        T FindById(string id);
+
+        List<T> FindAll();
+        Task<List<T>> FindAllAsync();
+
+        void InsertOne(T info);
+        Task InsertOneAsync(T info);
+
+        int UpdateOne(T info, params string[] fields);
+        Task<int> UpdateOneAsync(T info, params string[] fields);
+
         int ReplaceOne(T info);
+        Task<int> ReplaceOneAsync(T info);
     }
 }

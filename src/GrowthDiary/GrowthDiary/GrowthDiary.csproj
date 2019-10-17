@@ -16,6 +16,5 @@
     <ProjectReference Include="..\GrowthDiary.IService\GrowthDiary.IService.csproj" />
     <ProjectReference Include="..\GrowthDiary.Repository\GrowthDiary.Repository.csproj" />
     <ProjectReference Include="..\GrowthDiary.Service\GrowthDiary.Service.csproj" />
-    <ProjectReference Include="..\GrowthDiary.ViewModel\GrowthDiary.ViewModel.csproj" />
   </ItemGroup>
 </Project>

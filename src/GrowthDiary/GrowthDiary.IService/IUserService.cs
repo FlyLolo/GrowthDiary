@@ -1,9 +1,11 @@
-﻿using GrowthDiary.ViewModel;
+﻿using GrowthDiary.Model;
+using System.Collections.Generic;
 
 namespace GrowthDiary.IService
 {
     public interface IUserService : IBaseService<UserViewModel>
     {
-        UserViewModel Find(UserSearchViewModel SearchModel);
+        UserViewModel Find(UserSearchModel searchModel);
+        List<UserViewModel> FindAll();
     }
 }

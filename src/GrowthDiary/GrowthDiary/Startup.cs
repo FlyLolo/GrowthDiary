@@ -1,7 +1,9 @@
 using AutoMapper;
 using FlyLolo.JWT;
 using GrowthDiary.Common;
+using GrowthDiary.IRepository;
 using GrowthDiary.IService;
+using GrowthDiary.Repository;
 using GrowthDiary.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -64,6 +66,9 @@ namespace GrowthDiary
 
             services.AddSingleton<IUserService,UserService>();
             services.AddSingleton<IRecordService,RecordService>();
+            services.AddSingleton<IRecordRepository, RecordRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<MongoHelper, MongoHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,40 +8,51 @@ namespace GrowthDiary.Repository
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
-        public T GetById(string id)
+        protected MongoHelper _mongoHelper;
+        public T FindById(string id)
         {
             var builder = Builders<T>.Filter;
             var filter = builder.Eq(m => m._id, id);
-            return MongoHelper.Find(filter);
+            return _mongoHelper.Find(filter);
         }
 
-        public List<T> GetList()
+        public List<T> FindAll()
         {
-            return MongoHelper.FindList<T>();
+            return _mongoHelper.FindList<T>();
         }
 
-        public void Add(T info)
+        public async Task<List<T>> FindAllAsync()
         {
-            MongoHelper.InsertOne(info);
+            return await _mongoHelper.FindListAsync<T>();
         }
 
-        public int Update(T info, params string[] fields)
+        public void InsertOne(T info)
         {
-            return MongoHelper.UpdateOne(info, fields: fields);
+            _mongoHelper.InsertOne(info);
         }
-        public async Task<int> UpdateAsync(T info, params string[] fields)
+
+        public async Task InsertOneAsync(T info)
         {
-            return await MongoHelper.UpdateOneAsync(info, fields: fields);
+            await _mongoHelper.InsertOneAsync(info);
+        }
+
+        public int UpdateOne(T info, params string[] fields)
+        {
+            return _mongoHelper.UpdateOne(info, fields: fields);
+        }
+        public async Task<int> UpdateOneAsync(T info, params string[] fields)
+        {
+            return await _mongoHelper.UpdateOneAsync(info, fields: fields);
         }
 
         public int ReplaceOne(T info)
         {
-            return MongoHelper.ReplaceOne(info);
+            return _mongoHelper.ReplaceOne(info);
         }
 
         public async Task<int> ReplaceOneAsync(T info)
         {
-            return await MongoHelper.ReplaceOneAsync(info);
+            return await _mongoHelper.ReplaceOneAsync(info);
         }
     }
 }
