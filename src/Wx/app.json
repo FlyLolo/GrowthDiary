@@ -1,10 +1,10 @@
 {
   "pages": [
+        "pages/note/index/index",
     "pages/launch/launch",
     "pages/charts/charts",
-    "pages/note/index/index",
+
     "pages/note/noteAdd/noteAdd",
-    "pages/logs/logs",
     "pages/user/user"
 
   ],
@@ -23,7 +23,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "开心睿宝",
+    "navigationBarTitleText": "宝宝成长记",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
   },

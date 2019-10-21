@@ -8,7 +8,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    fileServer: app.globalData.server + "/api/file/" ,
     list: null,
     pageIndex:0,
     pageSize:9,
@@ -73,61 +72,7 @@ Page({
       url: '/pages/note/noteAdd/noteAdd'
     })
   },
-  // 点击图片进行大图查看
-  LookPhoto: function (e) {
-    var array = that.data.list[e.currentTarget.dataset.recordindex].imageList;
-    for(var i=0;i<array.length;i++){
-      array[i] = array[i].replace("s-","");
-    }
-    console.log(e, array, that.data.fileServer);
-    wx.previewImage({
-      current: array[e.currentTarget.dataset.index],
-      urls: array,
-    })
-  },
-
-  // 点击点赞的人
-  TouchPraiseUser: function (e) {
-    wx.showModal({
-      title: e.currentTarget.dataset.name,
-      showCancel: false
-    })
-  },
-
-  // 删除朋友圈
-  delete: function (e) {
-    var record = that.data.list[e.currentTarget.dataset.index];
-    record.state = 2;
-    http.httpPost(
-      "/api/record",
-      record,
-      function (res) {
-        wx.showToast({
-          title: '删除成功',
-        })
-        that.setList();
-      }
-    )
-  },
-
-
-  praise: function (e) {
-    var record = that.data.list[e.currentTarget.dataset.index];
-    record.changeField = "PraiseList";
-    record.praiseList = [app.globalData.userInfo.userName]
-    record.state = 1;
-    http.httpPost(
-      "/api/record",
-      record,
-      function (res) {
-        wx.showToast({
-          title: '点赞成功',
-        }),
-        that.setList();
-
-      }
-    )
-  },
+  
   //点击出现输入框
   showInput: function (e) {
     this.setData({
@@ -165,18 +110,5 @@ Page({
 
       }
     )
-  },
-  loadImageError:function(e){
-    var url = that.data.list[e.currentTarget.dataset.recordindex].imageList[e.currentTarget.dataset.index];
-    if (imageReloadList.indexOf(url) > -1){
-
-    }
-    else{
-      setTimeout(function () {
-        imageReloadList.push(url);
-        var item = 'list[' + e.currentTarget.dataset.recordindex + '].imageList[' + e.currentTarget.dataset.index + "]";
-        that.setData({ [item]: url + " " });
-      }, 2000)
-    }
   }
 })
