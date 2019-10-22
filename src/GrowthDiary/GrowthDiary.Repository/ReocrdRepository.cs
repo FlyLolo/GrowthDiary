@@ -18,8 +18,8 @@ namespace GrowthDiary.Repository
             var builder = Builders<Record>.Filter;
             var filter = builder.Eq(m => m.State, searchModel.State);
             var list = await _mongoHelper.FindListAsync<Record>(filter);
-            searchModel.RecordCount = list.Count;
-            return list.OrderByDescending(m => m.CreateTime).Skip((searchModel.PageIndex - 1) * searchModel.PageSize).Take(searchModel.PageSize).ToList();
+            searchModel.PageSeting.RecordCount = list.Count;
+            return list.OrderByDescending(m => m.CreateTime).Skip((searchModel.PageSeting.PageIndex - 1) * searchModel.PageSeting.PageSize).Take(searchModel.PageSeting.PageSize).ToList();
         }
     }
 }

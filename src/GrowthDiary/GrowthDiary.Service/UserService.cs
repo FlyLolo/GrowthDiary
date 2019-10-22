@@ -36,9 +36,10 @@ namespace GrowthDiary.Service
             return _mapper.Map<List<User>, List<UserViewModel>>(list);
         }
 
-        public Task<int> UpdateOneAsync(UserViewModel viewModel, params string[] fields)
+        public async Task<int> UpdateOneAsync(UserViewModel viewModel, params string[] fields)
         {
-            throw new NotImplementedException();
+            var model = _mapper.Map<UserViewModel,User>(viewModel);
+            return await _repository.UpdateOneAsync(model,fields);
         }
     }
 }

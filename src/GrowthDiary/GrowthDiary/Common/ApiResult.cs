@@ -5,7 +5,7 @@ namespace GrowthDiary.Common
     public enum ReturnCode
     {
         ArgsError = -1001,
-        AuthorizeError = -1002,
+        LoginError = -1002,
         GeneralError = -1003,
         Success = 0,
     }
@@ -13,7 +13,7 @@ namespace GrowthDiary.Common
 
     public class ApiResult
     {
-        private static readonly Dictionary<ReturnCode, string> codeMessageDict = new Dictionary<ReturnCode, string>() { { ReturnCode.Success, "操作成功。" }, { ReturnCode.ArgsError, "参数错误。" }, { ReturnCode.GeneralError, "操作错误。" }, { ReturnCode.AuthorizeError, "授权错误。" } };
+        private static readonly Dictionary<ReturnCode, string> codeMessageDict = new Dictionary<ReturnCode, string>() { { ReturnCode.Success, "操作成功。" }, { ReturnCode.ArgsError, "参数错误。" }, { ReturnCode.GeneralError, "操作错误。" }, { ReturnCode.LoginError, "用户名或密码错误。" } };
 
         public ApiResult(ReturnCode returnCode = ReturnCode.Success, string msg = null)
         {

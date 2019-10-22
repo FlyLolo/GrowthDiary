@@ -30,6 +30,7 @@ namespace GrowthDiary
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpClient();
 
             // зЂВс Swagger
             services.AddSwaggerGen(c =>

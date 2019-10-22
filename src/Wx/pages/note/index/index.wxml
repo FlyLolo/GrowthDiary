@@ -5,7 +5,7 @@
   <!-- 列表 -->
   <view class='CircleList' wx:for='{{list}}' wx:key="_id">
     
-
+<text>{{item.UserName}}</text>
   </view>
 </scroll-view>
 

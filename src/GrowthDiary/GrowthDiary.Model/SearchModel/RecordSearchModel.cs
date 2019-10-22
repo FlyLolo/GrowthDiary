@@ -1,4 +1,5 @@
 ﻿using GrowthDiary.Model;
+using GrowthDiary.Model.Base;
 using System;
 
 namespace GrowthDiary.Model

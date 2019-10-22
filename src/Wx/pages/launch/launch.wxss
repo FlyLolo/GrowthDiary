@@ -1,29 +1,42 @@
 /**index.wxss**/
+
 .launchImage {
   margin: 0px;
   width: 160px;
   height: 160px;
   align-items: center;
-  border-radius: 90%;
+  border-radius: 30%;
 }
+
 .loginInfo {
-  margin-top: 200rpx;
+  margin-top: 80rpx;
 }
+
 .userinfo {
   display: flex;
 }
-.userinfo-avatar {
-  width: 64rpx;
-  height: 64rpx;
-  border-radius: 50%;
-  overflow:hidden;
 
-}
-.userinfo-nickname {
-  color: #aaa;
-  width: 100rpx;
-}
 .loginInfo-btn {
-  margin-top: 20rpx;
+  margin-top: 50rpx;
+  width: 300rpx;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.auth-btn {
+  margin-top: 200rpx;
+  width: 300rpx;
+}
+
+.loginInfo-form {
+  margin-top: 20rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.loginInfo-input {
+  background-color: lightblue;
+  width: 260rpx;
+  margin-left: auto;
+  margin-right: 0px;
+}

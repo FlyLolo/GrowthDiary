@@ -13,7 +13,7 @@
         public string City { get; set; }
         public string Language { get; set; }
         public string Telephone { get; set; }
-
+        public string Password { get; set; }
         public int State { get; set; }
 
         

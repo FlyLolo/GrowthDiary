@@ -1,4 +1,6 @@
-﻿namespace GrowthDiary.Model
+﻿using GrowthDiary.Model.Base;
+
+namespace GrowthDiary.Model
 {
     public class UserSearchModel : BaseSearchModel
     {

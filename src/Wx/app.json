@@ -1,7 +1,8 @@
 {
   "pages": [
-        "pages/note/index/index",
     "pages/launch/launch",
+        "pages/note/index/index",
+   
     "pages/charts/charts",
 
     "pages/note/noteAdd/noteAdd",

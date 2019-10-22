@@ -62,30 +62,32 @@ namespace GrowthDiary.Controllers
             {
                 return new JsonResult(new ApiResult(ReturnCode.GeneralError));
             }
-
-            UserViewModel user = _userService.Find(new UserSearchModel() { WxOpenId = session.Openid });
+            UserSearchModel userSearchModel = new UserSearchModel { WxOpenId = session.Openid };
+            UserViewModel user = _userService.Find(userSearchModel);
 
             if (null == user)
             {
-                if (Request.Query.Keys.Contains("nickName"))
+                if (Request.Query.Keys.Contains("usercode"))
                 {
-                    user = new UserViewModel
+                    userSearchModel.UserCode = Request.Query["usercode"];
+                    user = _userService.Find(userSearchModel);
+                    if (null == user || (!user.Password.Equals(Request.Query["userPassword"])))
                     {
-                        NickName = Request.Query["nickName"],
-                        Gender = Request.Query["gender"],
-                        Country = Request.Query["country"],
-                        Province = Request.Query["province"],
-                        City = Request.Query["city"],
-                        Language = Request.Query["language"],
+                        return new JsonResult(new ApiResult(ReturnCode.LoginError));
+                    }
 
-                        UserCode = session.Openid,
-                        WxOpenId = session.Openid
-                    };
+                    user.NickName = Request.Query["nickName"];
+                    user.Gender = Request.Query["gender"];
+                    user.Country = Request.Query["country"];
+                    user.Province = Request.Query["province"];
+                    user.City = Request.Query["city"];
+                    user.Language = Request.Query["language"];
                     user.AvatarUrl = Request.Query["avatarUrl"];
-                    user.State = 2;
+                    user.WxOpenId = session.Openid;
+                   
                     try
                     {
-                        _userService.InsertOneAsync(user);
+                        _userService.UpdateOneAsync(user, "NickName", "Gender", "Country", "Province", "City", "Language", "AvatarUrl", "WxOpenId");
                         return new JsonResult(new ApiResult<UserViewModel>(user, ReturnCode.Success));
                     }
                     catch (System.Exception)
@@ -95,7 +97,7 @@ namespace GrowthDiary.Controllers
                 }
                 else
                 {
-                    return new JsonResult(new ApiResult(ReturnCode.ArgsError));
+                    return new JsonResult(new ApiResult(ReturnCode.LoginError));
                 }
             }
 

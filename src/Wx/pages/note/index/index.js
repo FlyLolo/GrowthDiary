@@ -36,7 +36,7 @@ Page({
   {
     http.httpGet(
       "/api/record",
-      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex, PageSize: that.data.pageSize, IsPagination:true,State:1},
+      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex, PageSize: that.data.pageSize, IsPagination: true, State: 1 }, //
       function(res){
         if (res.statusCode == 200 && res.data.code == 0) {
           var list = res.data.data.items;

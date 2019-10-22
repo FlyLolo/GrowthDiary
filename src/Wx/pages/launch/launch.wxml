@@ -2,33 +2,31 @@
 <view class="container">
   <image class='launchImage' src='../../images/200.jpg' mode='center'></image>
 
-  <view wx:if="{{loginState == -1}}" class="loginInfo">
-    <button type="primary" wx:if="{{loginState < 1 && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授权登录</button>
+  <view wx:if="{{loginState == -1}}" class="auth-btn">
+    <button type="primary" wx:if="{{loginState < 1 && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授 权</button>
   </view>
 
-  <view wx:if="{{loginState == 8}}" class="loginInfo">
-
-    <view class="bc_green">
-      <view class='userinfo' style="flex-direction:row;">
-        <view class="userinfo-avatar">
-          <open-data type="userAvatarUrl"></open-data>
-        </view>
-        <view>
-          <open-data class="userinfo-nickname" type="userNickName"></open-data>
-        </view>
+  <view wx:if="{{loginState == -8}}" class="loginInfo">
+    <form bindsubmit='formSubmit'>
+      <view class='loginInfo-form'>
+        用户名：
+        <input class='loginInfo-input' name='userCode' auto-focus />
       </view>
-    </view>
+      <view class='loginInfo-form'>
+        密 码：
+        <input class='loginInfo-input' name='userPassword' password="true" placeholder="" />
+      </view>
 
-    <view class="bc_green loginInfo-btn">
-      <button type="primary" bindtap="toList">欢迎进入</button>
-    </view>
+
+      <view class="bc_green loginInfo-btn">
+        <button type="primary" form-type='submit'>登 录</button>
+      </view>
+    </form>
+
 
   </view>
-  <view class="loginInfo" wx:if="{{showAuth}}">
-    <input placeholder="请输入授权码" style="width:300rpx;border: 1px;" bindinput="auCodeInput"></input><button type="primary" size="mini" bindtap="sendAuthorizationCode"> 确认</button>
-    <text  >   </text>
-  </view>
-  <view wx:if="{{!showAuth}}" class="loginInfo">
-    <text class="userinfo-nickname" bindtap="inputAuthorizationCode">{{message}}</text>
+
+  <view class="loginInfo">
+    <text class="userinfo-nickname">{{message}}</text>
   </view>
 </view>
