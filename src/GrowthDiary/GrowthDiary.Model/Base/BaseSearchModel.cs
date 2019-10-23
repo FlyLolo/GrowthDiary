@@ -3,6 +3,6 @@ namespace GrowthDiary.Model.Base
 {
     public class BaseSearchModel
     {
-        public PageSeting PageSeting{ get; set; }
+        public PageSeting PageSeting { get; set; } = new PageSeting();
     }
 }

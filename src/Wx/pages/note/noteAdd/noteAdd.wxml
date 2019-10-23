@@ -1,56 +1,39 @@
+<view class="kind-list-item">
+  <view class="kind-list-item-hd">
+    <view class="kind-list-text">添加记录</view>
+  </view>
+</view>
 <form bindsubmit="formSubmit">
-  <view class="note-page">
-    <textarea bindblur="bindTextAreaBlur" auto-height placeholder="这一刻的想法..." class='note-content' name="textarea" />
-    <!--
-    <view>
-      <text>已选择的照片</text>
-      <text>{{imageList.length}}/{{count[countIndex]}}</text>
-    </view>-->
-    <view class="weui-uploader__bd">
-      <view class="weui-uploader__files">
 
-        <block wx:for="{{imageList}}" wx:for-item="image">
-          <view class="weui-uploader__file">
-            <image class="weui-uploader__img" src="{{image}}" data-src="{{image}}" bindtap="previewImage"></image>
+      <view class="page-section">
+        <view class="page-section-title">类型：</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+                          <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+              <view class="weui-input">{{array[index]}}</view>
+            </picker>
+            </view>
           </view>
-        </block>
-
-        <view class="weui-uploader__input-box">
-          <view class="weui-uploader__input" bindtap="chooseImage"></view>
         </view>
-
       </view>
-    </view>
+      <view class="page-section">
+        <view class="page-section-title">值：</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__bd">
+                          <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+              <view class="weui-input">{{array[index]}}</view>
+            </picker>
+            </view>
+          </view>
+        </view>
+      </view>
 
 
-
-    <view class="note-location" bindtap="chooseLocation" >
-      <block wx:if="{{hasLocation === false}}">
-        <image src="/images/location_grey.png" class="note-location-icon"></image>
-        <text class="note-location-text" name="address">所在位置</text>
-      </block>
-      <block wx:if="{{hasLocation === true}}">
-        <image src="/images/location_green.png" class="note-location-icon"></image>
-        <text class="note-location-text" name="address">{{location.name}}</text>
-      </block>
-      <image src="/images/arrow_right.png" class="note-location-right-icon"></image>
-    </view>
 
     <view class='note-buttons'>
       <button  type="default" size="mini" bindtap='cancelBtn'>取消</button>
-      <button  type="primary" size="mini" form-type="submit">发表</button>
+      <button  type="primary" size="mini" form-type="submit">确定</button>
     </view>
-
-
-
-  </view>
-
-
-
-
-
-
-
-
-
 </form>

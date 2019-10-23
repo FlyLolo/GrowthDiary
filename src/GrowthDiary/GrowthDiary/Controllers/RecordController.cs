@@ -27,7 +27,7 @@ namespace GrowthDiary.Controllers
                 var list = await _recordService.FindAsync(searchViewModel);
                 return new ApiResult<PagesModel<RecordViewModel>>(new Model.PagesModel<RecordViewModel> { Items = list,PageSeting = searchViewModel.PageSeting});
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new ApiResult(ReturnCode.GeneralError);
             }

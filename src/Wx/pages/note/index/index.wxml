@@ -1,17 +1,43 @@
-<scroll-view class='page'>
-    <cover-view class="cover-add" bindtap="addRecord"  style="margin-top:200rpx">
-      <cover-image src="/images/camera.png" />
-    </cover-view>
-  <!-- 列表 -->
-  <view class='CircleList' wx:for='{{list}}' wx:key="_id">
-    
-<text>{{item.UserName}}</text>
+<view class="kind-list-item">
+  <view class="kind-list-item-hd">
+    <view class="kind-list-text">记录列表</view>
+    <image class="kind-list-img" src="../../../images/view.png" bindtap="addRecord"></image>
   </view>
-</scroll-view>
+</view>
+<view class="grids" style='height:90%'>
+  <view class="grid">
+    <p class="grid__label">时 间</p>
+  </view>
+  <view class="grid">
+    <p class="grid__label">类 型</p>
+  </view>
+  <view class="grid">
+    <p class="grid__label">值</p>
+  </view>
+  <view class="grid">
+    <p class="grid__label">操作</p>
+  </view>
+  <scroll-view class='page'>
+    <!-- 列表 -->
+    <view wx:for='{{list}}' wx:key="_id">
+      <view class="grid">
+        <p class="grid__label">{{item.createTime}}</p>
+      </view>
+      <view class="grid">
+        <p class="grid__label">{{item.recordType == 1?'身高':'体重'}}</p>
+      </view>
+      <view class="grid">
+        <p class="grid__label">{{item.value}}</p>
+      </view>
+      <view class="grid">
+        <button class="mini-btn" type="warn" size="mini" bindtap="deleteRecord">删除</button>
+      </view>
 
-
+    </view>
+  </scroll-view>
+</view>
 <!-- 输入框及发送按钮 -->
-<view class="input-section" wx:if="{{showInput}}" >
+<view class="input-section" wx:if="{{showInput}}">
   <input class='input_input' value="{{inputMessage}}" focus="auto" placeholder="请输入内容" bindinput='bindInputMsg' confirm-type="send" bindconfirm="sendDiscuss" bindblur="onHideInput" />
   <view style="height:110rpx;width:170rpx;display:flex; align-items: center;justify-content: center;">
     <view class="send_btn">

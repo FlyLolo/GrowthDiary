@@ -7,3 +7,71 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+
+
+.kind-list-item {
+  margin: 20rpx 0;
+  background-color: #FFFFFF;
+  border-radius: 4rpx;
+  overflow: hidden;
+}
+.kind-list-item:first-child {
+  margin-top: 0;
+}
+.kind-list-text{
+  flex: 1;
+}
+.kind-list-img {
+  width: 60rpx;
+  height: 60rpx;
+}
+.kind-list-item-hd {
+  padding: 30rpx;
+  display: flex;
+  align-items: center;
+
+  transition: opacity .3s;
+}
+.kind-list-item-hd-show {
+  opacity: .2;
+}
+.kind-list-item-bd {
+  height: 0;
+  overflow: hidden;
+}
+.kind-list-item-bd-show {
+  height: auto;
+}
+
+
+.page-section{
+  width: 100%;
+  margin-bottom: 60rpx;
+}
+.page-section_center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page-section:last-child{
+  margin-bottom: 0;
+}
+.page-section-gap{
+  box-sizing: border-box;
+  padding: 0 30rpx;
+}
+.page-section-spacing{
+  box-sizing: border-box;
+  padding: 0 80rpx;
+}
+.page-section-title{
+  font-size: 28rpx;
+  color: #999999;
+  margin-bottom: 10rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
+.page-section-gap .page-section-title{
+  padding-left: 0;
+  padding-right: 0;
+}

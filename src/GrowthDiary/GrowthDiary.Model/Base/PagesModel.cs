@@ -5,7 +5,7 @@ namespace GrowthDiary.Model
 {
     public class PagesModel<T>
     {
-        public PageSeting PageSeting { get; set; }
+        public PageSeting PageSeting { get; set; } = new PageSeting();
         public List<T> Items { get; set; }
     }
 }
