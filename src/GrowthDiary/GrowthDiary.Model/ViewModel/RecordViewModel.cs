@@ -18,7 +18,7 @@ namespace GrowthDiary.Model
         /// <summary>
         /// 记录类型
         /// </summary>
-        public RecordType RecordType { get; set; }
+        public int RecordType { get; set; }
         /// <summary>
         /// 记录值
         /// </summary>
@@ -30,7 +30,7 @@ namespace GrowthDiary.Model
         /// <summary>
         /// 记录时间
         /// </summary>
-        public DateTime CreateTime { get; set; }
+        public DateTime? CreateTime { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ var app = getApp()
 var that;
 Page({
   data: {
-    recordType:[{ code: "1", name: "身高" }, { code: "2", name: "体重" }],
+    recordType:[{ code: 1, name: "身高" }, { code: 2, name: "体重" }],
     recordTypeIndex: 0,
   },
   onLoad: function (options) {
@@ -19,18 +19,19 @@ Page({
   
   //表单提交
   formSubmit: function(e) {
-    console.error('form发生了submit事件，携带数据为：', e);
+    console.error('form发生了submit事件，携带数据为：', e, that.data.recordType[that.data.recordTypeIndex].code);
     
     http.httpPost(
       "/api/record",
       {
-        value: e.detail.value.value,
-        recordType: that.data.recordType[that.data.recordTypeIndex].code,
-        State:1,
+        "Value": parseFloat(e.detail.value.value),
+        "RecordType": that.data.recordType[that.data.recordTypeIndex].code,
+        "State":1,
       },
       function(res) {
       }
     )
+    return;
     wx.navigateBack({
       delta: 1
     })

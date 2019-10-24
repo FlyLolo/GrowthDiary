@@ -11,6 +11,7 @@ const httpGet = function (url, data, success, fail, requireToken = true) {
 }
 
 const httpPost = function (url, data, success, fail, requireToken = true) {
+  console.log(data);
   wx.request({
     url: app.globalData.server + url,
     data: data,
@@ -32,18 +33,6 @@ const httpPut = function (url, data, success, fail, requireToken = true) {
   })
 }
 
-const uploadFile = function (filePath, formData, success, fail, requireToken = true) {
-  wx.uploadFile({
-    url: app.globalData.server + "/api/file",
-    filePath: filePath,
-    name: 'file',
-    formData: formData,
-    header: fileUploadHeader(requireToken),
-    success: success,
-    fail: fail
-  })
-}
-
 const requestHeader = function (requireToken) {
   if (requireToken) {
     console.log(app.globalData.userInfo.loginCode);
@@ -58,22 +47,11 @@ const requestHeader = function (requireToken) {
   }
 }
 
-const fileUploadHeader = function (requireToken) {
-  if (requireToken) {
-    return { 'token': app.globalData.userInfo.loginCode };
-
-  }
-  else {
-    return null;
-  }
-}
-
 
 module.exports = {
   httpGet: httpGet,
   httpPost: httpPost,
-  httpPut: httpPut,
-  uploadFile: uploadFile
+  httpPut: httpPut
 }
 
 

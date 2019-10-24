@@ -2,8 +2,10 @@
 using GrowthDiary.IService;
 using GrowthDiary.Model;
 using Microsoft.AspNetCore.Mvc;
+using SharpCompress.Writers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -27,13 +29,14 @@ namespace GrowthDiary.Controllers
                 var list = await _recordService.FindAsync(searchViewModel);
                 return new ApiResult<PagesModel<RecordViewModel>>(new Model.PagesModel<RecordViewModel> { Items = list,PageSeting = searchViewModel.PageSeting});
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new ApiResult(ReturnCode.GeneralError);
             }
         }
 
-        public async Task<ApiResult> Post([FromBody] RecordViewModel record)
+        [HttpPost]
+        public async Task<ApiResult> Post([FromBody]RecordViewModel record)
         {
             if (record == null)
             {
@@ -41,21 +44,21 @@ namespace GrowthDiary.Controllers
             }
             try
             {
-                if (string.IsNullOrEmpty(record._id))
+                if (string.IsNullOrEmpty(record._id) && record.State == 1)
                 {
+                    record.CreateTime = DateTime.Now;
                     await _recordService.InsertOneAsync(record);
                 }
                 else
                 {
-                    await _recordService.UpdateOneAsync(record);
+                    await _recordService.UpdateOneAsync(record,"Value","State");
                 }
-
-                return new ApiResult(ReturnCode.GeneralError);
             }
             catch (Exception)
             {
                 return new ApiResult(ReturnCode.GeneralError);
-            }            
+            }
+            return new ApiResult(ReturnCode.Success);
         }
     }
 }
