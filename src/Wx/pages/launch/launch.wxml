@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container">
-  <image class='launchImage' src='../../images/200.jpg' mode='center'></image>
+  <image class='launchImage' src='../../images/200.png' mode='center'></image>
 
   <view wx:if="{{loginState == -1}}" class="auth-btn">
     <button type="primary" wx:if="{{loginState < 1 && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 授 权</button>

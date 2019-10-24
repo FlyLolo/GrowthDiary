@@ -1,39 +1,40 @@
-<view class="kind-list-item">
-  <view class="kind-list-item-hd">
-    <view class="kind-list-text">添加记录</view>
-  </view>
-</view>
-<form bindsubmit="formSubmit">
+<view>
 
-      <view class="page-section">
-        <view class="page-section-title">类型：</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__bd">
-                          <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-              <view class="weui-input">{{array[index]}}</view>
+  <view class="kind-list-item">
+    <view class="kind-list-item-hd">
+      <view class="kind-list-text">添加记录</view>
+    </view>
+  </view>
+  <form bindsubmit="formSubmit">
+
+    <view class="page-section">
+      <view class="page-section-title">类型：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <picker bindchange="recordTypeChange" value="{{recordTypeIndex}}" range="{{recordType}}" range-key="name">
+              <view class="weui-input">{{recordType[recordTypeIndex].name}}</view>
             </picker>
-            </view>
           </view>
         </view>
       </view>
-      <view class="page-section">
-        <view class="page-section-title">值：</view>
-        <view class="weui-cells weui-cells_after-title">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__bd">
-                          <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-              <view class="weui-input">{{array[index]}}</view>
-            </picker>
-            </view>
+    </view>
+    <view class="page-section">
+      <view class="page-section-title">值：</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__bd">
+            <input type='digit' name='value' class="weui-input" value="{{item.value}}" />
           </view>
         </view>
       </view>
+    </view>
 
 
 
     <view class='note-buttons'>
-      <button  type="default" size="mini" bindtap='cancelBtn'>取消</button>
-      <button  type="primary" size="mini" form-type="submit">确定</button>
+      <button type="default" size="mini" bindtap='cancelBtn'>取消</button>
+      <button type="primary" size="mini" form-type="submit">确定</button>
     </view>
-</form>
+  </form>
+</view>
