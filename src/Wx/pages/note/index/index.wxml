@@ -18,7 +18,7 @@
     <view class="grid">
       <p class="grid__label">操作</p>
     </view>
-    <scroll-view class='page'>
+    <scroll-view class='page' bindscrolltolower="scrollToLower">
       <!-- 列表 -->
       <view wx:for='{{list}}' wx:key="_id">
         <view class="grid">
@@ -31,7 +31,7 @@
           <p class="grid__label">{{item.value}}</p>
         </view>
         <view class="grid">
-          <button class="mini-btn" type="warn" size="mini" bindtap="deleteRecord">删除</button>
+          <button class="mini-btn" data-id="{{item._id}}"data-index="{{index}}"  type="warn" size="mini" bindtap="deleteRecord">删除</button>
         </view>
 
       </view>

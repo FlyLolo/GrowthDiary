@@ -24,16 +24,18 @@ Page({
     http.httpPost(
       "/api/record",
       {
-        "Value": parseFloat(e.detail.value.value),
-        "RecordType": that.data.recordType[that.data.recordTypeIndex].code,
-        "State":1,
+        UserCode: app.globalData.userInfo.userCode,
+        UserName: app.globalData.userInfo.userName,
+        Value: parseFloat(e.detail.value.value),
+        RecordType: that.data.recordType[that.data.recordTypeIndex].code,
+        State:1,
       },
       function(res) {
       }
     )
-    return;
+
     wx.navigateBack({
-      delta: 1
+      delta: 2
     })
 
   },

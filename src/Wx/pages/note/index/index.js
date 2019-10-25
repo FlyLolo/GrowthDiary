@@ -10,7 +10,7 @@ Page({
   data: {
     list: null,
     pageIndex:0,
-    pageSize:9
+    pageSize:20
   },
 
   /**
@@ -26,18 +26,21 @@ Page({
   onPullDownRefresh: function () {
     that.setList();
   },
-  setList:function()
+  scrollToLower: function () {
+    that.setList(1);
+  },
+  setList:function(addPage = 0)
   {
     http.httpGet(
       "/api/record",
-      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex, PageSize: that.data.pageSize, IsPagination: true, State: 1 }, //
+      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex + addPage, PageSize: that.data.pageSize, IsPagination: true, State: 1 }, //
       function(res){
         console.log("---------------", res.data.data);
         if (res.statusCode == 200 && res.data.code == 0) {
           that.setData({ 
             list: res.data.data.items,
-            pageIndex: res.data.data.pageSeting.pageIndex,
-            pageSize: res.data.data.pageSeting.pageIndex
+            pageIndex: res.data.data.pageIndex,
+            pageSize: res.data.data.pageSize
            });
         }
       },
@@ -52,9 +55,19 @@ Page({
       url: '/pages/note/noteAdd/noteAdd'
     })
   },
-  deleteRecord: function () {
-    wx.navigateTo({
-      url: '/pages/note/noteAdd/noteAdd'
-    })
+  deleteRecord: function (e) {
+    
+    http.httpPost(
+      "/api/record",
+      {
+        _id: e.currentTarget.dataset.id,
+        State: 2,
+      },
+      function (res) {
+
+      }
+    );
+    that.data.list.splice(e.currentTarget.dataset.index, 1);
+    that.setData({ list: that.data.list }); 
   }
 })

@@ -27,7 +27,7 @@ namespace GrowthDiary.Controllers
             try
             {
                 var list = await _recordService.FindAsync(searchViewModel);
-                return new ApiResult<PagesModel<RecordViewModel>>(new Model.PagesModel<RecordViewModel> { Items = list,PageSeting = searchViewModel.PageSeting});
+                return new ApiResult<PagesModel<RecordViewModel>>(new Model.PagesModel<RecordViewModel> (list,searchViewModel));
             }
             catch (Exception)
             {
@@ -49,9 +49,9 @@ namespace GrowthDiary.Controllers
                     record.CreateTime = DateTime.Now;
                     await _recordService.InsertOneAsync(record);
                 }
-                else
+                else if (!string.IsNullOrEmpty(record._id) && record.State == 2)
                 {
-                    await _recordService.UpdateOneAsync(record,"Value","State");
+                    await _recordService.UpdateOneAsync(record,"State");
                 }
             }
             catch (Exception)

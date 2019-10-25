@@ -13,16 +13,22 @@
     "list": [
       {
         "pagePath": "pages/note/index/index",
-        "text": "首页"
+        "text": "首页",
+              "iconPath": "images/task1.png",
+              "selectedIconPath": "images/task.png"
       }
       ,
       {
         "pagePath": "pages/charts/charts",
-        "text": "图表"
+        "text": "图表",
+              "iconPath": "images/screen1.png",
+              "selectedIconPath": "images/screen.png"
       },
       {
         "pagePath": "pages/user/user",
-        "text": "我"
+        "text": "我",
+              "iconPath": "images/user1.png",
+              "selectedIconPath": "images/user.png"
       }
     ]
   },
