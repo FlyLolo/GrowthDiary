@@ -1,4 +1,5 @@
 ﻿using System;
+using GrowthDiary.Model;
 
 namespace FlyLolo.JWT
 {
@@ -13,5 +14,6 @@ namespace FlyLolo.JWT
     {
         public Token AccessToken { get; set; }
         public Token RefreshToken { get; set; }
+        public UserViewModel User {get;set;}
     }
 }

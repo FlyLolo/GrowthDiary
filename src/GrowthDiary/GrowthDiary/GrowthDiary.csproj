@@ -17,4 +17,7 @@
     <ProjectReference Include="..\GrowthDiary.Repository\GrowthDiary.Repository.csproj" />
     <ProjectReference Include="..\GrowthDiary.Service\GrowthDiary.Service.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\UserController.cs" />
+  </ItemGroup>
 </Project>

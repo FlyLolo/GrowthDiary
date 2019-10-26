@@ -4,36 +4,25 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using FlyLolo.JWT;
+using GrowthDiary.Common;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GrowthDiary.Controllers
 {
     [Route("Token")]
-    public class TokenController : Controller
+    public class TokenController : BaseController
     {
-        private ITokenHelper tokenHelper = null;
+        private readonly ITokenHelper tokenHelper;
         public TokenController(ITokenHelper _tokenHelper)
         {
             tokenHelper = _tokenHelper;
         }
 
-        //[HttpGet]
-        //public IActionResult Get(string code, string pwd)
-        //{
-        //    User user = TemporaryData.GetUser(code);
-        //    if (null != user && user.Password.Equals(pwd))
-        //    {
-        //        return Ok(tokenHelper.CreateToken(user));
-        //    }
-        //    return BadRequest();
-        //}
-
-        [HttpPost]
-        [Authorize]
-        public IActionResult Post()
+        [HttpGet]
+        public ApiResult Get()
         {
-            return Ok(tokenHelper.RefreshToken(Request.HttpContext.User));
+            return new ApiResult<Token>(tokenHelper.RefreshToken(Request.HttpContext.User),ReturnCode.Success);
         }
     }
 }

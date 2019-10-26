@@ -14,24 +14,8 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-const formatLocation = function (longitude, latitude) {
-  if (typeof longitude === 'string' && typeof latitude === 'string') {
-    longitude = parseFloat(longitude)
-    latitude = parseFloat(latitude)
-  }
-
-  longitude = longitude.toFixed(2)
-  latitude = latitude.toFixed(2)
-
-  return {
-    longitude: longitude.toString().split('.'),
-    latitude: latitude.toString().split('.')
-  }
-}
-
 module.exports = {
-  formatTime: formatTime,
-  formatLocation: formatLocation
+  formatTime: formatTime
 }
 
 

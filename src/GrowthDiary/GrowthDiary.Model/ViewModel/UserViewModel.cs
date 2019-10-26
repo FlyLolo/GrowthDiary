@@ -1,4 +1,6 @@
-﻿namespace GrowthDiary.Model
+﻿using System.Collections.Generic;
+
+namespace GrowthDiary.Model
 {
     public class UserViewModel:BaseViewModel
     {
@@ -16,6 +18,28 @@
         public string Password { get; set; }
         public int State { get; set; }
 
-        
+        public UserPermissions UserPermissions { get; set; }
+    }
+
+    public class UserPermissions
+    {
+        public string UserCode { get; set; }
+        public List<Role> Roles { get; set; }
+        public List<Permission> Permissions { get; set; }
+    }
+
+    public class Permission
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Url { get; set; }
+
+        public string Method { get; set; }
+    }
+
+    public class Role
+    {
+        public string Code { get; set; }
+        public string Name { get; set; }
     }
 }

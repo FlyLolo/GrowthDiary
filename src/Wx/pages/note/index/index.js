@@ -10,7 +10,9 @@ Page({
   data: {
     list: null,
     pageIndex:0,
-    pageSize:20
+    pageSize:20,
+    recordCount: 0,
+    pageCount:1
   },
 
   /**
@@ -18,6 +20,11 @@ Page({
    */
   onLoad: function (options) {
     that = this;
+    let res = wx.getSystemInfoSync();
+    let boxHeight = res.windowHeight - 135;
+    this.setData({
+      'boxHeight': boxHeight
+    })
   },
   onShow:function()
   {
@@ -27,25 +34,26 @@ Page({
     that.setList();
   },
   scrollToLower: function () {
-    that.setList(1);
+    if (that.data.pageSize * that.data.pageCount < that.data.recordCount){
+      that.setList(1);
+    }
   },
   setList:function(addPage = 0)
   {
     http.httpGet(
       "/api/record",
-      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex + addPage, PageSize: that.data.pageSize, IsPagination: true, State: 1 }, //
+      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex, PageSize: (addPage + that.data.pageCount)* that.data.pageSize, IsPagination: true, State: 1 }, //
       function(res){
-        console.log("---------------", res.data.data);
         if (res.statusCode == 200 && res.data.code == 0) {
           that.setData({ 
             list: res.data.data.items,
             pageIndex: res.data.data.pageIndex,
-            pageSize: res.data.data.pageSize
+            pageCount: addPage + that.data.pageCount,
+            recordCount: res.data.data.recordCount
            });
         }
       },
       function (res) {
-        console.log("---------------", res);
       }
     );
   },

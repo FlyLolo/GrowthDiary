@@ -1,11 +1,13 @@
 using AutoMapper;
 using FlyLolo.JWT;
+using FlyLolo.JWT.API.Authorize;
 using GrowthDiary.Common;
 using GrowthDiary.IRepository;
 using GrowthDiary.IService;
 using GrowthDiary.Repository;
 using GrowthDiary.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,21 +48,42 @@ namespace GrowthDiary
             Configuration.GetSection("JWT").Bind(config);
             #endregion
 
-            #region 启用JWT
-            services.AddAuthentication(Options =>
+
+            #region 启用JWT认证
+            services.AddAuthentication(options =>
             {
-                Options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).
-             AddJwtBearer(options =>
-             {
-                 options.TokenValidationParameters = new TokenValidationParameters
-                 {
-                     ValidIssuer = config.Issuer,
-                     ValidAudience = config.RefreshTokenAudience,
-                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.IssuerSigningKey))
-                 };
-             });
+            AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = config.Issuer,
+                    ValidAudience = config.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.IssuerSigningKey)),
+                    //ClockSkew = TimeSpan.FromMinutes(5)
+                };
+                //通过TokenValidationParameters的构造方法查看参数的默认值如下：
+                //public TokenValidationParameters()
+                //{
+                //    RequireExpirationTime = true;
+                //    RequireSignedTokens = true;
+                //    SaveSigninToken = false;
+                //    ValidateActor = false;
+                //    ValidateAudience = true;
+                //    ValidateIssuer = true;
+                //    ValidateIssuerSigningKey = false;
+                //    ValidateLifetime = true;
+                //    ValidateTokenReplay = false;
+                //}
+                //DefaultClockSkew = TimeSpan.FromSeconds(300); //即ClockSkew的默认值为5分钟
+            });
+            #endregion
+
+            #region 自定义授权
+            services.AddAuthorization(options => options.AddPolicy("Permission", policy => policy.Requirements.Add(new PermissionRequirement())));
+            services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
             #endregion
 
             services.AddAutoMapper(typeof(AutoMapperProfile));
@@ -70,6 +93,7 @@ namespace GrowthDiary
             services.AddSingleton<IRecordRepository, RecordRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<MongoHelper, MongoHelper>();
+            services.AddSingleton<ITokenHelper, TokenHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +114,7 @@ namespace GrowthDiary
             });
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

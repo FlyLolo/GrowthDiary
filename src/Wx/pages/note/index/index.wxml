@@ -18,7 +18,7 @@
     <view class="grid">
       <p class="grid__label">操作</p>
     </view>
-    <scroll-view class='page' bindscrolltolower="scrollToLower">
+    <scroll-view scroll-y="true" bindscrolltolower="scrollToLower" style="height:{{boxHeight}}px">
       <!-- 列表 -->
       <view wx:for='{{list}}' wx:key="_id">
         <view class="grid">

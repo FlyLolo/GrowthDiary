@@ -35,10 +35,9 @@ const httpPut = function (url, data, success, fail, requireToken = true) {
 
 const requestHeader = function (requireToken) {
   if (requireToken) {
-    console.log(app.globalData.userInfo.loginCode);
     return {
       'content-type': 'application/json',
-      'token': app.globalData.userInfo.loginCode
+      'Authorization': "bearer " + app.globalData.accessToken.tokenContent
     };
 
   }

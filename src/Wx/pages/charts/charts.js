@@ -62,7 +62,7 @@ Page({
       length = dataList.length;
       found = false;
       for (var k = 0; k < length; k++) {
-        if (dataList[k].recordType == that.data.tableRows[i].recordType) {
+        if (dataList[k].name == that.data.tableRows[i].recordType) {
           dataList[k].data.push([that.data.tableRows[i].createTime, that.data.tableRows[i].value]);
           found = true;
           break;
@@ -90,7 +90,7 @@ Page({
   },
   getOption: function (dataList, legend) {
     var option = {
-      //color: ["#FF9900", "#99CCFF", "#CCCC33", "#FFFF00", "#99CC33", "#CC6699", "#3366CC", "#9933FF", "#FF6666", "#663300", "#993399", "#999966"],
+      color: ["#FF9900", "#99CC33", "#CCCC33", "#FFFF00", "#CC6699", "#3366CC", "#9933FF", "#FF6666", "#663300", "#993399", "#999966"],
       title: {
         text: '身高体重趋势',
         subtext: '可拖动下面标尺'
@@ -118,44 +118,6 @@ Page({
           type: 'value'
         }
       ],
-      series: dataList
-    };
-    return option;
-    // 指定图表的配置项和数据
-    var option = {
-      color: ["#FF9900", "#99CCFF", "#CCCC33", "#FFFF00", "#99CC33", "#CC6699", "#3366CC", "#9933FF", "#FF6666", "#663300", "#993399", "#999966"],
-      grid: {
-        containLabel: true,
-        top: '5%',
-        bottom: '20%',
-      },
-      tooltip: {
-        show: true,
-        trigger: 'axis'
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: xAxis,
-        // show: false
-      },
-      yAxis: {
-        x: 'center',
-        type: 'value',
-        splitLine: {
-          lineStyle: {
-            type: 'dashed'
-          }
-        }
-        // show: false
-      },
-      legend: {
-        data: ['1'],
-        top: '85%',
-        left: 'center',
-        //backgroundColor: 'red',
-        z: 100
-      },
       series: dataList
     };
     return option;

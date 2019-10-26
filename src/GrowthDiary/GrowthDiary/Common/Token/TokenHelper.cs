@@ -24,27 +24,19 @@ namespace FlyLolo.JWT
 
         public Token CreateAccessToken(UserViewModel user)
         {
-            Claim[] claims = new Claim[] { new Claim(ClaimTypes.NameIdentifier, user.UserCode), new Claim(ClaimTypes.Name, user.UserName) };
+            Claim[] claims = { new Claim(ClaimTypes.NameIdentifier, user.UserCode), new Claim(ClaimTypes.Name, user.UserName) };
 
             return CreateToken(claims, TokenType.AccessToken);
         }
 
         public ComplexToken CreateToken(UserViewModel user)
         {
-            Claim[] claims = new Claim[] { new Claim(ClaimTypes.NameIdentifier, user.UserCode), new Claim(ClaimTypes.Name, user.UserName) };
+            Claim[] claims = { new Claim(ClaimTypes.NameIdentifier, user.UserCode), new Claim(ClaimTypes.Name, user.UserName) };
 
-            //下面对code为001的张三添加了一个Claim，用于测试在Token中存储用户的角色信息，对应测试在FlyLolo.JWT.API的BookController的Put方法，若用不到可删除
-            if (user.UserCode.Equals("001"))
-            {
-                claims = claims.Append(new Claim(ClaimTypes.Role, "TestPutBookRole")).ToArray();
-            }
-
-            return CreateToken(claims);
-        }
-
-        public ComplexToken CreateToken(Claim[] claims)
-        {
-            return new ComplexToken { AccessToken = CreateToken(claims, TokenType.AccessToken), RefreshToken = CreateToken(claims, TokenType.RefreshToken) };
+            return new ComplexToken { AccessToken = CreateToken(claims, TokenType.AccessToken),
+                RefreshToken = CreateToken(claims, TokenType.RefreshToken),
+                User = user
+            };
         }
 
         /// <summary>
@@ -62,7 +54,7 @@ namespace FlyLolo.JWT
             var expires = now.Add(TimeSpan.FromMinutes(tokenType.Equals(TokenType.AccessToken) ? _options.Value.AccessTokenExpiresMinutes : _options.Value.RefreshTokenExpiresMinutes));
             var token = new JwtSecurityToken(
                 issuer: _options.Value.Issuer,
-                audience: tokenType.Equals(TokenType.AccessToken) ? _options.Value.Audience : _options.Value.RefreshTokenAudience,
+                audience: _options.Value.Audience,
                 claims: claims,
                 notBefore: now,
                 expires: expires,
@@ -73,9 +65,10 @@ namespace FlyLolo.JWT
         public Token RefreshToken(ClaimsPrincipal claimsPrincipal)
         {
             var code = claimsPrincipal.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.NameIdentifier));
+            var name = claimsPrincipal.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.Name));
             if (null != code)
             {
-                return CreateAccessToken(new UserViewModel());//(TemporaryData.GetUser(code.Value.ToString()));
+                return CreateAccessToken(new UserViewModel { UserCode = code.Value,UserName = name.Value});
             }
             else
             {

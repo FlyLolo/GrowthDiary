@@ -1,4 +1,5 @@
 var http = require('../../utils/http.js')
+var token = require('../../utils/token.js')
 //获取应用实例
 const app = getApp()
 var that
@@ -17,6 +18,16 @@ Page({
       success: res => {
         //是否已授权
         if (res.authSetting['scope.userInfo']) {
+          if (that.data.userInfo == null) {
+            wx.getUserInfo({
+              success: function(res) {
+                app.globalData.userInfo = res.userInfo;
+                that.setData({
+                  userInfo : res.userInfo
+                });
+              }
+            });
+          }
           state = this.userLogin({});
         } else {
           that.setState(-1, "");
@@ -24,44 +35,42 @@ Page({
       }
     })
   },
-  userLogin:function(userInfo)
-  {
+  userLogin: function(userInfo) {
     var state = 1;
-console.log("userinfoww",userInfo);
+    console.log("userinfoww", userInfo);
     // 已授权后再登录，验证用户信息
     wx.login({
       success: res => {
 
-        userInfo.loginCode =  res.code;
+        userInfo.loginCode = res.code;
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         http.httpGet(
           "/api/Account",
           userInfo,
-          function (res) {
-            console.log(res);
-            if(res.statusCode == 200 && res.data.code == 0){
-              app.globalData.userInfo = res.data.data;
-              console.log(app.globalData.userInfo);
+          function(res) {
+            console.log("user--->", res);
+            if (res.statusCode == 200 && res.data.code == 0) {
+              token.setToken(res.data.data);
+              console.log('userInfo', app.globalData.userInfo);
               that.toList();
-            }
-            else
-            {
+            } else {
               that.setState(-8, " ");
             }
-          }, function (res) {
-            console.log('mmm');
+          },
+          function(res) {
+            console.log("faild----",res);
             that.setState(-8, " "); //temp  -16
-          },false
+          }, false
         );
       }
     })
   },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo;
-    this.setData({
+    that.setData({
       userInfo: e.detail.userInfo,
     })
-    this.userLogin(e.detail.userInfo);
+    that.userLogin(e.detail.userInfo);
   },
   setState: function(state, msg) {
     //console.log("loginState：" + state);
@@ -95,11 +104,17 @@ console.log("userinfoww",userInfo);
       url: "/pages/note/index/index"
     })
   },
-  formSubmit:function(e){
-    console.log("submit",e.detail.value);
-    var userInfo = that.data.userInfo;
-    console.log("submit", userInfo);
-    Object.assign(userInfo, e.detail.value);
-    that.userLogin(userInfo);
+  formSubmit: function(e) {    
+    try{
+      console.log("submit", e.detail.value);
+      var userInfo = that.data.userInfo;
+      console.log("submit", userInfo);
+      Object.assign(userInfo, e.detail.value);
+      that.userLogin(userInfo);
+    }
+    catch(e){
+      wx.showToast(e);
+    }
+
   }
 })

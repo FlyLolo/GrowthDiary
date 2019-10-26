@@ -1,4 +1,5 @@
-﻿using GrowthDiary.Common;
+﻿using FlyLolo.JWT;
+using GrowthDiary.Common;
 using GrowthDiary.IService;
 using GrowthDiary.Model;
 using GrowthDiary.Wx;
@@ -18,12 +19,12 @@ namespace GrowthDiary.Controllers
     {
         private readonly WXOptions _options;
         private readonly IUserService _userService;
-        private readonly ILogger<AccountController> _logger;
-        public AccountController(IOptionsMonitor<WXOptions> options, IUserService userService, ILogger<AccountController> logger)
+        private readonly ITokenHelper _tokenHelper = null;
+        public AccountController(IOptionsMonitor<WXOptions> options, IUserService userService, ITokenHelper tokenHelper)
         {
-            _logger = logger;
             _options = options.Get("WXOptions");
             _userService = userService;
+            _tokenHelper = tokenHelper;
         }
 
         [HttpGet]
@@ -88,7 +89,6 @@ namespace GrowthDiary.Controllers
                     try
                     {
                         _userService.UpdateOneAsync(user, "NickName", "Gender", "Country", "Province", "City", "Language", "AvatarUrl", "WxOpenId");
-                        return new JsonResult(new ApiResult<UserViewModel>(user, ReturnCode.Success));
                     }
                     catch (System.Exception)
                     {
@@ -100,8 +100,8 @@ namespace GrowthDiary.Controllers
                     return new JsonResult(new ApiResult(ReturnCode.LoginError));
                 }
             }
-
-            return new JsonResult(new ApiResult<UserViewModel>(user,ReturnCode.Success));
+            
+            return new JsonResult(new ApiResult<ComplexToken>(_tokenHelper.CreateToken(user), ReturnCode.Success));
         }
     }
 }
