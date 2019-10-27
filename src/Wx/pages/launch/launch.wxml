@@ -27,6 +27,9 @@
   </view>
 
   <view class="loginInfo">
-    <text class="userinfo-nickname">{{message}}</text>
+    <text class="message">{{message}}</text>
+  </view>
+    <view class="loginInfo">
+    <text class="message">仅供家人内部使用，需提供给与的用户名密码，其他人谢绝使用。</text>
   </view>
 </view>

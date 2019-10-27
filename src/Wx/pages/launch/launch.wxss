@@ -40,3 +40,7 @@
   margin-left: auto;
   margin-right: 0px;
 }
+.message{
+  font-size: 6.5pt;
+  color: gray;
+}
