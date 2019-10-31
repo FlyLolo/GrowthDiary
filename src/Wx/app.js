@@ -4,7 +4,7 @@ App({
     userInfo: null,
     accessToken:null,
     refreshToken:null,
-    server: "https://api.flylolo.cn"//server: "http://localhost:8081"//
+    server: "http://localhost:63026"//server: "https://api.flylolo.cn"//server: "http://localhost:8081"//
   }
 
 })

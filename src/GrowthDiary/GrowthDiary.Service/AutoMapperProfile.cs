@@ -12,9 +12,6 @@ namespace GrowthDiary.Service
 
             CreateMap<RecordViewModel, Record>();
             CreateMap<Record, RecordViewModel>();
-
-            //CreateMap<BaseModel,BaseViewModel>();
-            //CreateMap<BaseViewModel,BaseModel>();
         }
     }
 }

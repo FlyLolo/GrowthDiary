@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GrowthDiary.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "Permission")]
     public class BaseController : Controller
     {
     }

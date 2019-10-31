@@ -19,7 +19,7 @@ const getToken = function() {
     url: app.globalData.server + "/token",
     data: null,
     header: {
-      'Authorization': "bearer " + app.globalData.accessToken.tokenContent
+      'Authorization': "bearer " + app.globalData.refreshToken.tokenContent
     },
     success: function(res) {
       if (res.statusCode == 200 && res.data.code == 0) {

@@ -29,7 +29,7 @@ namespace GrowthDiary.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public JsonResult Get([FromServices] IHttpClientFactory httpClientFactory)
+        public ActionResult Get([FromServices] IHttpClientFactory httpClientFactory)
         {
             string loginCode;
             if (Request.Query.Keys.Contains("loginCode"))
@@ -63,11 +63,13 @@ namespace GrowthDiary.Controllers
             {
                 return new JsonResult(new ApiResult(ReturnCode.GeneralError));
             }
+            //小程序返回的Openid验证
             UserSearchModel userSearchModel = new UserSearchModel { WxOpenId = session.Openid };
             UserViewModel user = _userService.Find(userSearchModel);
 
             if (null == user)
             {
+                //用户名密码方式验证
                 if (Request.Query.Keys.Contains("usercode"))
                 {
                     userSearchModel.UserCode = Request.Query["usercode"];
@@ -85,7 +87,7 @@ namespace GrowthDiary.Controllers
                     user.Language = Request.Query["language"];
                     user.AvatarUrl = Request.Query["avatarUrl"];
                     user.WxOpenId = session.Openid;
-                   
+
                     try
                     {
                         _userService.UpdateOneAsync(user, "NickName", "Gender", "Country", "Province", "City", "Language", "AvatarUrl", "WxOpenId");
@@ -100,8 +102,12 @@ namespace GrowthDiary.Controllers
                     return new JsonResult(new ApiResult(ReturnCode.LoginError));
                 }
             }
-            
-            return new JsonResult(new ApiResult<ComplexToken>(_tokenHelper.CreateToken(user), ReturnCode.Success));
+            var token = _tokenHelper.CreateToken(user);
+            if (null == token)
+            {
+                return StatusCode(401);
+            }
+            return new JsonResult(new ApiResult<ComplexToken>(token, ReturnCode.Success));
         }
     }
 }

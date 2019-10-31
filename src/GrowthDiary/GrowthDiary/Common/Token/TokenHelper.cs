@@ -50,6 +50,7 @@ namespace FlyLolo.JWT
         /// <returns></returns>
         private Token CreateToken(Claim[] claims, TokenType tokenType)
         {
+            claims = claims.Append(new Claim("TokenType", tokenType.ToString())).ToArray();
             var now = DateTime.Now;
             var expires = now.Add(TimeSpan.FromMinutes(tokenType.Equals(TokenType.AccessToken) ? _options.Value.AccessTokenExpiresMinutes : _options.Value.RefreshTokenExpiresMinutes));
             var token = new JwtSecurityToken(
@@ -64,16 +65,17 @@ namespace FlyLolo.JWT
 
         public Token RefreshToken(ClaimsPrincipal claimsPrincipal)
         {
-            var code = claimsPrincipal.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.NameIdentifier));
-            var name = claimsPrincipal.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.Name));
-            if (null != code)
+            if (claimsPrincipal.Claims.Any(m=>m.Type.Equals("TokenType") && m.Value.Equals(TokenType.RefreshToken.ToString())))
             {
-                return CreateAccessToken(new UserViewModel { UserCode = code.Value,UserName = name.Value});
+                var code = claimsPrincipal.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.NameIdentifier));
+                var name = claimsPrincipal.Claims.FirstOrDefault(m => m.Type.Equals(ClaimTypes.Name));
+                if (null != code)
+                {
+                    return CreateAccessToken(new UserViewModel { UserCode = code.Value, UserName = name.Value });
+                }
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }
