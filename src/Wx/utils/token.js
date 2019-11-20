@@ -11,7 +11,7 @@ const refreshToke = function() {
   var datestr = app.globalData.accessToken.expires.replace('T',' ').substr(0,16);
 
   var times = Date.parse(datestr) - new Date().getTime() - 5 * 60 * 1000;
-  console.log("times--->",app.globalData.accessToken.expires, times);
+
   setTimeout(getToken, times);
 }
 const getToken = function() {
@@ -19,7 +19,7 @@ const getToken = function() {
     url: app.globalData.server + "/token",
     data: null,
     header: {
-      'Authorization': "bearer " + app.globalData.accessToken.tokenContent
+      'Authorization': "bearer " + app.globalData.refreshToken.tokenContent
     },
     success: function(res) {
       if (res.statusCode == 200 && res.data.code == 0) {
@@ -30,14 +30,11 @@ const getToken = function() {
     },
     fail: function(res) {
       wx.navigateTo({
-        url: '/pages/note/noteAdd/noteAdd'
+        url: '/pages/launch/launch'
       })
     }
   })
 }
-
-
-
 
 module.exports = {
   setToken: setToken

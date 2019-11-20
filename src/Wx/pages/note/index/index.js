@@ -1,18 +1,16 @@
 var http = require('../../../utils/http.js')
 var app = getApp()
 var that
-var imageReloadList = []
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    list: null,
-    pageIndex:0,
+    list: [],
+    pageIndex:1,
     pageSize:20,
-    recordCount: 0,
-    pageCount:1
+    recordCount: 0
   },
 
   /**
@@ -34,7 +32,7 @@ Page({
     that.setList();
   },
   scrollToLower: function () {
-    if (that.data.pageSize * that.data.pageCount < that.data.recordCount){
+    if (that.data.pageSize * that.data.pageIndex < that.data.recordCount){
       that.setList(1);
     }
   },
@@ -42,15 +40,15 @@ Page({
   {
     http.httpGet(
       "/api/record",
-      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex, PageSize: (addPage + that.data.pageCount)* that.data.pageSize, IsPagination: true, State: 1 }, //
+      { UserCode: app.globalData.userInfo.userCode, PageIndex: that.data.pageIndex + addPage, PageSize: that.data.pageSize, IsPagination: true, State: 1 }, //
       function(res){
         if (res.statusCode == 200 && res.data.code == 0) {
           that.setData({ 
-            list: res.data.data.items,
+            list: that.data.list.concat(res.data.data.items) ,
             pageIndex: res.data.data.pageIndex,
-            pageCount: addPage + that.data.pageCount,
             recordCount: res.data.data.recordCount
            });
+          console.log(that.data.recordCount,that.data.list);
         }
       },
       function (res) {
